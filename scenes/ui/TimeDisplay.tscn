@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwm4s271ncu03"]
+
+[ext_resource type="Script" path="res://scripts/ui/TimeDisplay.gd" id="1_3jd07"]
+
+[node name="TimeDisplay" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+script = ExtResource("1_3jd07")
+
+[node name="MinuteLabel" type="Label" parent="."]
+layout_mode = 2
+text = "0"
+
+[node name="Sep1Label" type="Label" parent="."]
+layout_mode = 2
+text = ":"
+
+[node name="Second1Label" type="Label" parent="."]
+layout_mode = 2
+text = "9"
+horizontal_alignment = 1
+
+[node name="Second2Label" type="Label" parent="."]
+layout_mode = 2
+text = "8"
+horizontal_alignment = 1
+
+[node name="Sep2Label" type="Label" parent="."]
+layout_mode = 2
+text = "."
+
+[node name="Centi1Label" type="Label" parent="."]
+layout_mode = 2
+text = "7"
+horizontal_alignment = 1
+
+[node name="Centi2Label" type="Label" parent="."]
+layout_mode = 2
+text = "5"
+horizontal_alignment = 1
