@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://cr8yyirxhfqrt"]
+
+[ext_resource type="Script" path="res://scripts/PaintPot.gd" id="1_lgqu7"]
+[ext_resource type="ArrayMesh" uid="uid://c2wx4a825qyqm" path="res://resources/pot.res" id="2_5bars"]
+[ext_resource type="ArrayMesh" uid="uid://cdxl1oa3ovy3a" path="res://resources/paint.res" id="3_5u8dr"]
+[ext_resource type="Texture2D" uid="uid://c4udotar3apn2" path="res://assets/models/painting-pot_colormap.png" id="4_qodvs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6taaa"]
+size = Vector3(0.12085, 0.118973, 0.119141)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4cho3"]
+resource_name = "colormap"
+cull_mode = 2
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = ExtResource("4_qodvs")
+
+[node name="PaintPot" type="StaticBody3D"]
+script = ExtResource("1_lgqu7")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0605195, 0)
+shape = SubResource("BoxShape3D_6taaa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_5bars")
+
+[node name="Paint" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_5u8dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_4cho3")
+
+[node name="PaintPotArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00717578, 0)
+collision_layer = 8388608
+collision_mask = 8388608
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PaintPotArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_6taaa")

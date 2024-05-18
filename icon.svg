@@ -1,1 +1,97 @@
-<svg height="128" width="128" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="124" height="124" rx="14" fill="#363d52" stroke="#212532" stroke-width="4"/><g transform="scale(.101) translate(122 122)"><g fill="#fff"><path d="M105 673v33q407 354 814 0v-33z"/><path fill="#478cbf" d="m105 673 152 14q12 1 15 14l4 67 132 10 8-61q2-11 15-15h162q13 4 15 15l8 61 132-10 4-67q3-13 15-14l152-14V427q30-39 56-81-35-59-83-108-43 20-82 47-40-37-88-64 7-51 8-102-59-28-123-42-26 43-46 89-49-7-98 0-20-46-46-89-64 14-123 42 1 51 8 102-48 27-88 64-39-27-82-47-48 49-83 108 26 42 56 81zm0 33v39c0 276 813 276 813 0v-39l-134 12-5 69q-2 10-14 13l-162 11q-12 0-16-11l-10-65H447l-10 65q-4 11-16 11l-162-11q-12-3-14-13l-5-69z"/><path d="M483 600c3 34 55 34 58 0v-86c-3-34-55-34-58 0z"/><circle cx="725" cy="526" r="90"/><circle cx="299" cy="526" r="90"/></g><g fill="#414042"><circle cx="307" cy="532" r="60"/><circle cx="717" cy="532" r="60"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   height="256"
+   width="256"
+   version="1.1"
+   id="Layer_1"
+   viewBox="0 0 163.84064 163.84064"
+   xml:space="preserve"
+   sodipodi:docname="ceramic-pottery.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs14019"><linearGradient
+     inkscape:collect="always"
+     id="linearGradient18395"><stop
+       style="stop-color:#74bddc;stop-opacity:1;"
+       offset="0.1497826"
+       id="stop18391" /><stop
+       style="stop-color:#c6e2f2;stop-opacity:1;"
+       offset="1"
+       id="stop18393" /></linearGradient><linearGradient
+     inkscape:collect="always"
+     xlink:href="#linearGradient18395"
+     id="linearGradient18401"
+     x1="32.000275"
+     y1="256.97031"
+     x2="460.21655"
+     y2="360.55289"
+     gradientUnits="userSpaceOnUse"
+     gradientTransform="matrix(0.35853615,0,0,0.35853618,-9.8653388,-10.21282)" /></defs><sodipodi:namedview
+   id="namedview14017"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="0.76986251"
+   inkscape:cx="-5.8451996"
+   inkscape:cy="260.43611"
+   inkscape:window-width="1920"
+   inkscape:window-height="1052"
+   inkscape:window-x="1920"
+   inkscape:window-y="0"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+<rect
+   style="opacity:1;fill:url(#linearGradient18401);fill-opacity:1;stroke:#25769a;stroke-width:3.80462;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+   id="rect14178"
+   width="160.03603"
+   height="160.03603"
+   x="1.9023125"
+   y="1.90231"
+   ry="17.525833" /><g
+   id="g14002"
+   transform="matrix(0.25658068,0,0,0.25658069,16.23541,15.884663)">
+	<path
+   style="fill:#ba6b24"
+   d="m 382.79,7.694 c -8.763,6.059 -15.791,12.247 -21.306,18.554 -4.807,5.492 -8.456,11.078 -11.125,16.759 -8.421,17.928 -6.945,36.719 -0.413,56.135 -48.317,4.358 -65.713,79.225 -114.018,76.862 -14.314,-0.697 -59.537,-75.575 -73.851,-76.862 6.531,-19.416 8.007,-38.207 -0.413,-56.135 -2.669,-5.669 -6.319,-11.255 -11.125,-16.759 -5.515,-6.307 -12.543,-12.495 -21.306,-18.554 27.589,-3.342 55.178,-5.61 82.78,-6.767 56.924,-2.398 113.85,-0.142 170.777,6.767 z"
+   id="path13998" />
+	<path
+   style="fill:#ba6b24"
+   d="m 349.398,99.214 c 49.651,31.132 82.673,86.358 82.673,149.296 0,68.654 -39.293,155.119 -96.621,200.022 -11.255,8.811 -11.043,25.77 0.189,34.605 10.606,8.326 20.586,18.07 29.821,28.865 H 146.542 c 9.236,-10.795 19.216,-20.538 29.821,-28.865 11.244,-8.834 11.456,-25.794 0.201,-34.605 -57.34,-44.903 -96.633,-131.368 -96.633,-200.022 0,-62.938 33.022,-118.164 82.685,-149.296"
+   id="path14000" />
+</g>
+<g
+   id="g14014"
+   transform="matrix(0.25658068,0,0,0.25658069,16.23541,15.884663)">
+	<path
+   style="fill:#a55c20"
+   d="M 218.578,448.532 C 191.566,403.629 173.056,317.164 173.056,248.51 c 0,-62.938 15.557,-118.164 38.952,-149.296 H 162.615 C 112.952,130.346 79.93,185.572 79.93,248.51 c 0,68.654 39.293,155.119 96.633,200.022 11.255,8.811 11.043,25.77 -0.201,34.605 -10.606,8.326 -20.586,18.07 -29.821,28.865 h 57.894 c 4.351,-10.795 9.053,-20.538 14.049,-28.865 5.297,-8.836 5.397,-25.795 0.094,-34.605 z"
+   id="path14004" />
+	<path
+   style="fill:#a55c20"
+   d="m 212.007,99.214 -6.992,2.917 c -14.314,-0.697 -28.629,-1.701 -42.943,-2.988 10.972,-32.62 7.677,-63.446 -32.845,-91.448 27.589,-3.342 55.178,-5.61 82.78,-6.767 30.683,52.603 0,98.286 0,98.286 z"
+   id="path14006" />
+	<path
+   style="fill:#a55c20"
+   d="m 361.484,26.248 c -4.807,5.492 -8.456,11.078 -11.125,16.759 -62.631,-5.716 -126.077,-5.716 -188.696,0 -2.669,-5.669 -6.319,-11.255 -11.125,-16.759 l 5.515,-0.52 c 66.316,-6.307 133.588,-6.307 199.916,0 z"
+   id="path14008" />
+	<path
+   style="fill:#a55c20"
+   d="M 432.071,257.368 H 79.931 c -4.893,0 -8.858,-3.966 -8.858,-8.858 0,-4.892 3.965,-8.858 8.858,-8.858 h 352.141 c 4.893,0 8.858,3.966 8.858,8.858 0,4.892 -3.966,8.858 -8.859,8.858 z"
+   id="path14010" />
+	<path
+   style="fill:#a55c20"
+   d="M 422.009,322.443 H 89.993 c -4.893,0 -8.858,-3.966 -8.858,-8.858 0,-4.892 3.965,-8.858 8.858,-8.858 h 332.016 c 4.893,0 8.858,3.966 8.858,8.858 -0.001,4.892 -3.966,8.858 -8.858,8.858 z"
+   id="path14012" />
+</g>
+</svg>

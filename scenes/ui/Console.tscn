@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://mav1gffmbtgm"]
+
+[ext_resource type="Script" path="res://scripts/ui/Console.gd" id="1_oks84"]
+
+[node name="Console" type="CanvasLayer"]
+script = ExtResource("1_oks84")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 600.0
+offset_bottom = 400.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+text = "Hello world!"

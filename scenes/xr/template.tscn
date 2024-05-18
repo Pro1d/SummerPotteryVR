@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctjdtagc5jnl4"]
+
+[ext_resource type="Script" path="res://scripts/xr/XRRoot.gd" id="1_6rf4e"]
+[ext_resource type="PackedScene" uid="uid://njx823gyk04n" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_hand.tscn" id="2_2k7at"]
+[ext_resource type="PackedScene" uid="uid://raeeicvvindd" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_hand.tscn" id="3_7l8mh"]
+[ext_resource type="Material" uid="uid://domk7ml3g3g22" path="res://resources/materials/passtrough.material" id="4_g1rhe"]
+[ext_resource type="Environment" uid="uid://cb3yg5j0xnycg" path="res://resources/sky.tres" id="4_ox562"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1dmh1"]
+height = 0.01
+
+[node name="XROrigin3D" type="XROrigin3D"]
+script = ExtResource("1_6rf4e")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="XRControllerLeft" type="XRController3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="XRControllerLeft" instance=ExtResource("2_2k7at")]
+
+[node name="XRControllerRight" type="XRController3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5)
+tracker = &"right_hand"
+
+[node name="RightHand" parent="XRControllerRight" instance=ExtResource("3_7l8mh")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.882149, 0.351297, 0.313693, -0.37624, 0.125006, 0.91805, 0.283295, -0.927881, 0.242447, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_1dmh1")
+surface_material_override/0 = ExtResource("4_g1rhe")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("4_ox562")

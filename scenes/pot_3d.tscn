@@ -1,0 +1,139 @@
+[gd_scene load_steps=21 format=3 uid="uid://6egeikrpfebo"]
+
+[ext_resource type="Script" path="res://scripts/Pot3D.gd" id="1_rtv0p"]
+[ext_resource type="Shader" path="res://resources/pot_3d.gdshader" id="2_h5eof"]
+
+[sub_resource type="Curve" id="Curve_tj6p6"]
+bake_resolution = 50
+_data = [Vector2(0, 0.153846), 0.0, -0.542857, 0, 1, Vector2(0.0607287, 0.120879), -0.542857, -0.638655, 1, 1, Vector2(0.129555, 0.076923), -0.638655, 0.928574, 1, 1, Vector2(0.283401, 0.21978), 0.928574, 0.231003, 1, 1, Vector2(0.473684, 0.263736), 0.231003, -0.0798319, 0, 1, Vector2(0.611336, 0.252747), -0.0798319, -0.301588, 1, 1, Vector2(0.757085, 0.208791), -0.301588, -0.262672, 1, 1, Vector2(0.882591, 0.175824), -0.262672, -0.748769, 1, 1, Vector2(1, 0.0879121), -0.748769, 0.0, 1, 0]
+point_count = 9
+
+[sub_resource type="Curve" id="Curve_a7gx2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.287671, 1), 0.0, 0.0, 0, 0, Vector2(0.324201, 0.0879121), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_80qx8"]
+width = 64
+texture_mode = 1
+curve = SubResource("Curve_a7gx2")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_t6b6n"]
+noise_type = 5
+frequency = 1.0
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nbp1m"]
+width = 64
+height = 256
+noise = SubResource("FastNoiseLite_t6b6n")
+
+[sub_resource type="Curve" id="Curve_h878l"]
+_data = [Vector2(0, 0.494505), 0.0, 0.0, 0, 0, Vector2(1, 0.494505), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_plysd"]
+width = 96
+texture_mode = 1
+curve = SubResource("Curve_h878l")
+
+[sub_resource type="Curve" id="Curve_44l2m"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.0913242, 1), 0.0, 0.0, 0, 0, Vector2(0.127854, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.461538), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_pf42r"]
+max_value = 100.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.123288, 0), 0.0, 0.0, 0, 0, Vector2(0.155251, 100), 0.0, 0.0, 0, 0, Vector2(0.420091, 100), 0.0, 0.0, 0, 0, Vector2(1, 37.3626), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_rrflv"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.474886, 0.142857), 0.0, 0.0, 0, 0, Vector2(0.981735, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_0gbru"]
+width = 96
+curve_x = SubResource("Curve_44l2m")
+curve_y = SubResource("Curve_pf42r")
+curve_z = SubResource("Curve_rrflv")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n2xf8"]
+frequency = 0.0265
+fractal_octaves = 2
+fractal_weighted_strength = 0.5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_syfj6"]
+width = 256
+height = 256
+invert = true
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_n2xf8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2nwyi"]
+render_priority = 0
+shader = ExtResource("2_h5eof")
+shader_parameter/albedo = Color(0.713726, 0.415686, 0.313726, 1)
+shader_parameter/albedo_bump = Color(0.831316, 0.530286, 0.427698, 1)
+shader_parameter/albedo_flaw = Color(0.496937, 0.270211, 0.19239, 1)
+shader_parameter/roughness = 0.65
+shader_parameter/displacement_length = 0.03
+shader_parameter/height = 0.4
+shader_parameter/parent_transform = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+shader_parameter/parent_transform_inv = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+shader_parameter/texture_displacement = SubResource("NoiseTexture2D_syfj6")
+shader_parameter/displacement_curve = SubResource("CurveTexture_80qx8")
+shader_parameter/lines_texture = SubResource("NoiseTexture2D_nbp1m")
+shader_parameter/paint_texture = SubResource("CurveXYZTexture_0gbru")
+shader_parameter/paint_mask_texture = SubResource("CurveTexture_plysd")
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_56boq"]
+material = SubResource("ShaderMaterial_2nwyi")
+radius = 1.0
+radial_steps = 64
+sections = 4
+section_length = 0.1
+section_rings = 12
+cap_top = false
+curve = SubResource("Curve_tj6p6")
+
+[sub_resource type="Curve" id="Curve_bwh4l"]
+bake_resolution = 50
+_data = [Vector2(0, 0.153846), 0.0, -0.542857, 0, 1, Vector2(0.0607287, 0.120879), -0.542857, -0.638655, 1, 1, Vector2(0.129555, 0.076923), -0.638655, 0.928574, 1, 1, Vector2(0.283401, 0.21978), 0.928574, 0.231003, 1, 1, Vector2(0.473684, 0.263736), 0.231003, -0.0798319, 0, 1, Vector2(0.611336, 0.252747), -0.0798319, -0.301588, 1, 1, Vector2(0.757085, 0.208791), -0.301588, -0.262672, 1, 1, Vector2(0.882591, 0.175824), -0.262672, -0.748769, 1, 1, Vector2(1, 0.0879121), -0.748769, 0.0, 1, 0]
+point_count = 9
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_cempk"]
+material = SubResource("ShaderMaterial_2nwyi")
+flip_faces = true
+radius = 1.0
+radial_steps = 64
+sections = 4
+section_length = 0.1
+section_rings = 12
+cap_top = false
+curve = SubResource("Curve_bwh4l")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rua64"]
+material = SubResource("ShaderMaterial_2nwyi")
+flip_faces = true
+top_radius = 0.158
+bottom_radius = 0.142
+height = 0.001
+cap_top = false
+cap_bottom = false
+
+[node name="Pot3D" type="Node3D"]
+script = ExtResource("1_rtv0p")
+
+[node name="OutterSurface" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("TubeTrailMesh_56boq")
+skeleton = NodePath("../../../..")
+
+[node name="InnerSurface" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("TubeTrailMesh_cempk")
+skeleton = NodePath("../../../..")
+
+[node name="FlatCapTop" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 2.38418e-07, 0, 1, 0, -2.38418e-07, 0, 1, 0, 0.4, 0)
+mesh = SubResource("CylinderMesh_rua64")
+skeleton = NodePath("../OutterSurface")

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bnji78bjbijho"
+path="res://.godot/imported/workshop - spining_wood.ogg-8c92dc23ed81fd24548e232440d7ed64.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sounds/workshop - spining_wood.ogg"
+dest_files=["res://.godot/imported/workshop - spining_wood.ogg-8c92dc23ed81fd24548e232440d7ed64.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

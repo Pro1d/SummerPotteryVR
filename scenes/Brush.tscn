@@ -1,0 +1,107 @@
+[gd_scene load_steps=21 format=3 uid="uid://b4o74w3g70hk2"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_7y21s"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_gam2p"]
+[ext_resource type="Script" path="res://scripts/Brush.gd" id="2_ib3te"]
+[ext_resource type="Animation" uid="uid://c8qmcuyaltdnw" path="res://addons/godot-xr-tools/hands/animations/left/PingPong.res" id="3_chwfo"]
+[ext_resource type="Script" path="res://addons/godot-xr-tools/hands/poses/hand_pose_settings.gd" id="4_gu7kg"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="5_va67t"]
+[ext_resource type="Animation" uid="uid://c8hn123uon74u" path="res://addons/godot-xr-tools/hands/animations/right/PingPong.res" id="6_5eqmv"]
+[ext_resource type="PackedScene" uid="uid://da2qgxxwwitl6" path="res://addons/godot-xr-tools/objects/highlight/highlight_ring.tscn" id="7_tdmqh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kkqlw"]
+margin = 0.01
+size = Vector3(0.02, 0.218213, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8t4u"]
+albedo_color = Color(0.129558, 0.129558, 0.129558, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8asjy"]
+material = SubResource("StandardMaterial3D_k8t4u")
+top_radius = 0.005
+bottom_radius = 0.01
+height = 0.2
+radial_segments = 8
+rings = 1
+
+[sub_resource type="Resource" id="Resource_smcgt"]
+script = ExtResource("4_gu7kg")
+closed_pose = ExtResource("3_chwfo")
+
+[sub_resource type="Resource" id="Resource_ng0hw"]
+script = ExtResource("4_gu7kg")
+closed_pose = ExtResource("6_5eqmv")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_226oq"]
+radius = 0.03
+
+[sub_resource type="Curve" id="Curve_dh5pp"]
+bake_resolution = 10
+_data = [Vector2(0, 0.252747), 0.0, 0.0, 0, 0, Vector2(0.425101, 0.67033), 0.0, 0.0, 0, 0, Vector2(1, 0.043956), -0.517007, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_qon2q"]
+radius = 0.018
+radial_steps = 6
+sections = 2
+section_length = 0.025
+cap_top = false
+cap_bottom = false
+curve = SubResource("Curve_dh5pp")
+
+[sub_resource type="Gradient" id="Gradient_dftoc"]
+colors = PackedColorArray(0.68, 0.68, 0.68, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xuflu"]
+noise_type = 5
+frequency = 1.0
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w6u00"]
+width = 32
+height = 1
+color_ramp = SubResource("Gradient_dftoc")
+noise = SubResource("FastNoiseLite_xuflu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e2xoq"]
+albedo_texture = SubResource("NoiseTexture2D_w6u00")
+metallic = 0.16
+roughness = 0.79
+
+[node name="Brush" instance=ExtResource("1_7y21s")]
+script = ExtResource("2_ib3te")
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00910645, 0)
+shape = SubResource("BoxShape3D_kkqlw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("CylinderMesh_8asjy")
+
+[node name="GrabPointHandLeft" parent="." index="2" instance=ExtResource("2_gam2p")]
+transform = Transform3D(0.664005, 0.747729, 0, -0.661055, 0.587036, 0.467328, 0.349435, -0.310308, 0.884084, 0.00913553, 0.023573, -0.069316)
+visible = true
+hand_pose = SubResource("Resource_smcgt")
+
+[node name="GrabPointHandRight" parent="." index="3" instance=ExtResource("5_va67t")]
+transform = Transform3D(0.663926, -0.747798, 0, 0.660878, 0.586755, 0.46793, -0.349917, -0.310671, 0.883766, -0.009, 0.0221466, -0.069)
+visible = true
+hand_pose = SubResource("Resource_ng0hw")
+
+[node name="ToolPos" type="Area3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.119852, 0)
+collision_layer = 8388608
+collision_mask = 8388608
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ToolPos" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0223517, 0)
+shape = SubResource("SphereShape3D_226oq")
+
+[node name="ColoredEnd" type="MeshInstance3D" parent="ToolPos" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0017091, 0)
+mesh = SubResource("TubeTrailMesh_qon2q")
+surface_material_override/0 = SubResource("StandardMaterial3D_e2xoq")
+
+[node name="HighlightRing" parent="." index="5" instance=ExtResource("7_tdmqh")]

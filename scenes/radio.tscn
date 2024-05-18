@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://xue503ba4yrf"]
+
+[ext_resource type="Script" path="res://scripts/radio.gd" id="1_hht54"]
+[ext_resource type="AudioStream" uid="uid://cqdks4n73xyb8" path="res://assets/musics/summer_time_-_migfus20_radio-fx.ogg" id="2_lg7xk"]
+[ext_resource type="PackedScene" uid="uid://022kdwynkcxt" path="res://assets/models/radio.glb" id="2_t3d6x"]
+[ext_resource type="PackedScene" uid="uid://cme66uldrjl2i" path="res://addons/godot-xr-tools/interactables/interactable_area_button.tscn" id="5_xdl1j"]
+[ext_resource type="AudioStream" uid="uid://crgaexypgi7t4" path="res://assets/sounds/tuck.ogg" id="6_m4tja"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cnvmo"]
+margin = 0.01
+radius = 0.0324788
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dshio"]
+albedo_color = Color(0.85, 0.2465, 0.2465, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xf8wb"]
+material = SubResource("StandardMaterial3D_dshio")
+top_radius = 0.02
+bottom_radius = 0.03
+height = 0.025
+radial_segments = 4
+
+[node name="Radio" type="Node3D"]
+script = ExtResource("1_hht54")
+
+[node name="radio" parent="." instance=ExtResource("2_t3d6x")]
+
+[node name="Music" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0313923, 0.0765223, 0.0675577)
+stream = ExtResource("2_lg7xk")
+bus = &"Radio"
+
+[node name="InteractableAreaButton" parent="." instance=ExtResource("5_xdl1j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0158618, 0.149889, -0.0753606)
+button = NodePath("MeshInstance3D")
+displacement = Vector3(0, -0.013, 0)
+duration = 0.2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableAreaButton"]
+shape = SubResource("SphereShape3D_cnvmo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InteractableAreaButton"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0.005, 0)
+mesh = SubResource("CylinderMesh_xf8wb")
+
+[node name="ButtonAudio" type="AudioStreamPlayer3D" parent="InteractableAreaButton"]
+stream = ExtResource("6_m4tja")
+bus = &"Items"
+
+[connection signal="button_pressed" from="InteractableAreaButton" to="." method="_on_power_button_pressed"]
