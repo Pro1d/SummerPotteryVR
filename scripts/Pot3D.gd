@@ -4,13 +4,10 @@ extends Node3D
 @onready var outter := $OutterSurface as MeshInstance3D
 @onready var inner := $InnerSurface as MeshInstance3D
 @onready var flat_cap := $FlatCapTop as MeshInstance3D
-@onready var outter_tube_trail_mesh := outter.mesh as TubeTrailMesh
-@onready var inner_tube_trail_mesh := inner.mesh as TubeTrailMesh
+@onready var tube_trail_mesh := outter.mesh as TubeTrailMesh
 @onready var flat_cap_cylinder_mesh := flat_cap.mesh as CylinderMesh
-@onready var shape_curve := Curve.new()
-@onready var outter_shape_curve := outter_tube_trail_mesh.curve as Curve
-@onready var inner_shape_curve := inner_tube_trail_mesh.curve as Curve
-@onready var shader_material := outter_tube_trail_mesh.material as ShaderMaterial
+@onready var shape_curve := tube_trail_mesh.curve as Curve
+@onready var shader_material := tube_trail_mesh.material as ShaderMaterial
 @onready var displacement_curve := (
 	(shader_material.get_shader_parameter("displacement_curve") as CurveTexture)
 	.curve
@@ -44,10 +41,17 @@ static func _fill_curve(curve: Curve, value: float, count: int, linear: bool = t
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var mat := shader_material.duplicate() as ShaderMaterial
+	mat.set_shader_parameter("radial_offset", half_thickness)
+	outter.set_surface_override_material(0, mat)
+	mat = shader_material.duplicate() as ShaderMaterial
+	mat.set_shader_parameter("radial_offset", -half_thickness)
+	inner.set_surface_override_material(0, mat)
+	print(mat.get_shader_parameter("displacement_length"))
+	print(mat.get_shader_parameter("height"))
+	
 	const r := 0.5 * max_radius
 	Pot3D._fill_curve(shape_curve, r, curve_resolution)
-	Pot3D._fill_curve(outter_shape_curve, r + half_thickness, curve_resolution)
-	Pot3D._fill_curve(inner_shape_curve, r - half_thickness, curve_resolution)
 	Pot3D._fill_curve(displacement_curve, 0.4, curve_resolution)
 	Pot3D._fill_curve(paint_curves[0], 0.0, curve_resolution * 2, false)
 	Pot3D._fill_curve(paint_curves[1], 0.0, curve_resolution * 2, false)
@@ -59,14 +63,19 @@ func _ready() -> void:
 	flat_cap_cylinder_mesh.bottom_radius = r - half_thickness
 
 func _process(_delta: float) -> void:
-	shader_material.set_shader_parameter(
-		"parent_transform_inv",
-		(get_parent() as Node3D).global_transform.affine_inverse()
-	)
-	shader_material.set_shader_parameter(
-		"parent_transform",
-		(get_parent() as Node3D).global_transform
-	)
+	for mat: ShaderMaterial in [
+		shader_material,
+		inner.get_surface_override_material(0),
+		outter.get_surface_override_material(0)
+	]:
+		mat.set_shader_parameter(
+			"parent_transform_inv",
+			(get_parent() as Node3D).global_transform.affine_inverse()
+		)
+		mat.set_shader_parameter(
+			"parent_transform",
+			(get_parent() as Node3D).global_transform
+		)
 
 # ^ y (height)
 # |    *
@@ -114,8 +123,6 @@ func sculpt(tool_transform: Transform3D, tool_radius: float, tool_strength: floa
 			var new_point_r := move_toward(point_r, target_point_r, tool_speed * delta)
 			new_point_r = clampf(new_point_r, min_radius, max_radius)
 			shape_curve.set_point_value(i, new_point_r)
-			outter_shape_curve.set_point_value(i, (new_point_r + half_thickness))
-			inner_shape_curve.set_point_value(i, (new_point_r - half_thickness))
 			if i == 0:
 				flat_cap_cylinder_mesh.top_radius = new_point_r + half_thickness
 				flat_cap_cylinder_mesh.bottom_radius = new_point_r - half_thickness
@@ -171,6 +178,5 @@ func paint(tool_origin: Vector3, tool_radius: float, color: Color) -> float:
 	
 func update_height() -> void:
 	flat_cap.position.y = height
-	shader_material.set_shader_parameter("height", height)
-	outter_tube_trail_mesh.section_length = height / outter_tube_trail_mesh.sections
-	inner_tube_trail_mesh.section_length = height / inner_tube_trail_mesh.sections
+	shader_material.set_shader_parameter("height", height) # FIXME update inner/outter material too
+	tube_trail_mesh.section_length = height / tube_trail_mesh.sections

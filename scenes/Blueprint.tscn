@@ -3,7 +3,7 @@
 [ext_resource type="ArrayMesh" uid="uid://da160gc80op5w" path="res://resources/poster.res" id="1_vws0k"]
 [ext_resource type="Script" path="res://scripts/Blueprint.gd" id="1_wh4o6"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0m4px"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ilhsm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5c4sx"]
 albedo_color = Color(0.295749, 0.246595, 0.189416, 1)
@@ -23,7 +23,7 @@ script = ExtResource("1_wh4o6")
 [node name="Blueprint" type="MeshInstance3D" parent="."]
 transform = Transform3D(-2.18557e-08, 0.5, -2.18557e-08, 0, -2.18557e-08, -0.5, -0.5, -2.18557e-08, 9.55343e-16, 0, 0, 0)
 mesh = ExtResource("1_vws0k")
-surface_material_override/0 = SubResource("StandardMaterial3D_0m4px")
+surface_material_override/0 = SubResource("StandardMaterial3D_ilhsm")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.00723009, 0.0912417, 0)

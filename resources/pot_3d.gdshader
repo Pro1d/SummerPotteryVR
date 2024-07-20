@@ -1,7 +1,7 @@
 // NOTE: Shader automatically converted from Godot Engine 4.2.2.stable's StandardMaterial3D.
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx, world_vertex_coords; //skip_vertex_transform;
+render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_burley,specular_schlick_ggx, world_vertex_coords;
 
 const float inv_PI = 1.0 / PI;
 
@@ -18,6 +18,7 @@ uniform float displacement_length = 0.03;
 uniform float height = 0.4;
 uniform mat4 parent_transform;
 uniform mat4 parent_transform_inv;
+uniform float radial_offset = 0.0;
 varying float disp; // [-.5 ; +.5]
 varying float darken; // 0-1
 varying float lighten; // 0-1
@@ -28,6 +29,7 @@ void vertex() {
 	float theta = atan(local_pos.x, local_pos.z) * inv_PI * .5 + .5;
 	float h = clamp(local_pos.y / height, 0, 1);
 	uv3 = vec3(theta, h, length(local_pos.xz));
+	float new_radius = uv3.z + radial_offset;
 	
 	float noise = texture(texture_displacement, vec2(uv3.x, uv3.y * 0.3)).r;
 	disp = 0.0;
@@ -37,10 +39,12 @@ void vertex() {
 	if (uv3.z > 1e-3) {
 		float factor = texture(displacement_curve, vec2(1.0 - uv3.y, 0)).r * 0.95 + 0.05;
 		disp = (noise - .5) * factor;
-		local_pos.xz = local_pos.xz / uv3.z * (uv3.z + disp * min(displacement_length, uv3.z * .35));
+		new_radius += disp * min(displacement_length, uv3.z * .35);
 		darken = clamp(-disp * factor * 2.0, 0, 1);
 		lighten = clamp(disp * factor * 2.0, 0, 1);
 	}
+	local_pos.xz = local_pos.xz / uv3.z * new_radius;
+	uv3.z = new_radius;
 	VERTEX = ((parent_transform * local_pos)).xyz;
 }
 

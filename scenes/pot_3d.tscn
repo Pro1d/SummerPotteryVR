@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://6egeikrpfebo"]
+[gd_scene load_steps=19 format=3 uid="uid://6egeikrpfebo"]
 
 [ext_resource type="Script" path="res://scripts/Pot3D.gd" id="1_rtv0p"]
 [ext_resource type="Shader" path="res://resources/pot_3d.gdshader" id="2_h5eof"]
@@ -79,6 +79,7 @@ shader_parameter/displacement_length = 0.03
 shader_parameter/height = 0.4
 shader_parameter/parent_transform = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
 shader_parameter/parent_transform_inv = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+shader_parameter/radial_offset = 0.0
 shader_parameter/texture_displacement = SubResource("NoiseTexture2D_syfj6")
 shader_parameter/displacement_curve = SubResource("CurveTexture_80qx8")
 shader_parameter/lines_texture = SubResource("NoiseTexture2D_nbp1m")
@@ -94,22 +95,6 @@ section_length = 0.1
 section_rings = 12
 cap_top = false
 curve = SubResource("Curve_tj6p6")
-
-[sub_resource type="Curve" id="Curve_bwh4l"]
-bake_resolution = 50
-_data = [Vector2(0, 0.153846), 0.0, -0.542857, 0, 1, Vector2(0.0607287, 0.120879), -0.542857, -0.638655, 1, 1, Vector2(0.129555, 0.076923), -0.638655, 0.928574, 1, 1, Vector2(0.283401, 0.21978), 0.928574, 0.231003, 1, 1, Vector2(0.473684, 0.263736), 0.231003, -0.0798319, 0, 1, Vector2(0.611336, 0.252747), -0.0798319, -0.301588, 1, 1, Vector2(0.757085, 0.208791), -0.301588, -0.262672, 1, 1, Vector2(0.882591, 0.175824), -0.262672, -0.748769, 1, 1, Vector2(1, 0.0879121), -0.748769, 0.0, 1, 0]
-point_count = 9
-
-[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_cempk"]
-material = SubResource("ShaderMaterial_2nwyi")
-flip_faces = true
-radius = 1.0
-radial_steps = 64
-sections = 4
-section_length = 0.1
-section_rings = 12
-cap_top = false
-curve = SubResource("Curve_bwh4l")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_rua64"]
 material = SubResource("ShaderMaterial_2nwyi")
@@ -130,7 +115,7 @@ skeleton = NodePath("../../../..")
 
 [node name="InnerSurface" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = SubResource("TubeTrailMesh_cempk")
+mesh = SubResource("TubeTrailMesh_56boq")
 skeleton = NodePath("../../../..")
 
 [node name="FlatCapTop" type="MeshInstance3D" parent="."]
