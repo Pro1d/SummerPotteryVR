@@ -30,12 +30,12 @@ void vertex() {
 	float h = clamp(local_pos.y / height, 0, 1);
 	uv3 = vec3(theta, h, length(local_pos.xz));
 	float new_radius = uv3.z + radial_offset;
-	
+
 	float noise = texture(texture_displacement, vec2(uv3.x, uv3.y * 0.3)).r;
 	disp = 0.0;
 	darken = 0.0;
 	lighten = 0.0;
-	
+
 	if (uv3.z > 1e-3) {
 		float factor = texture(displacement_curve, vec2(1.0 - uv3.y, 0)).r * 0.95 + 0.05;
 		disp = (noise - .5) * factor;
@@ -52,17 +52,17 @@ void fragment() {
 	// lines pattern
 	float lines = texture(lines_texture, vec2(uv3.y, 1.0-uv3.z)).r;
 	lines *= lines * lines;
-	
+
 	vec4 paint_tex = texture(paint_texture, vec2(1.0 - uv3.y, uv3.x));
 	float paint_mask_tex = texture(paint_mask_texture, vec2(1.0 - uv3.y, uv3.x)).r;
-	
+
 	float masked_lines = lines * clamp(1.0 - abs(disp) / .2, 0, 1);
 	ALBEDO = mix(mix(mix(
 		mix(albedo.rgb, albedo_bump.rgb, masked_lines),
 		albedo_flaw.rgb, darken),
 		albedo_bump.rgb, lighten
 	), paint_tex.rgb, paint_mask_tex * 0.65);
-	
+
 	METALLIC = mix(0.0, 0.25, paint_mask_tex); //metallic;//mix(metallic, 0.2, masked_lines);
 	ROUGHNESS = mix(roughness, 0.35, paint_mask_tex); //mix(roughness, 0.1, masked_lines);
 	SPECULAR = 0.5;
