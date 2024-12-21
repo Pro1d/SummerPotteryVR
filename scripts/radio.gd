@@ -32,3 +32,6 @@ func _on_power_button_pressed(_button: Variant) -> void:
 	on = not on
 	music_player.volume_db = 0.0 if on else -100.0
 	#noise_player.playing = not noise_player.playing
+	print("radio button pressed")
+func _on_power_button_released(_b: Variant) -> void:
+	print("radio button released")

@@ -6,9 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cme66uldrjl2i" path="res://addons/godot-xr-tools/interactables/interactable_area_button.tscn" id="5_xdl1j"]
 [ext_resource type="AudioStream" uid="uid://crgaexypgi7t4" path="res://assets/sounds/tuck.ogg" id="6_m4tja"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_cnvmo"]
-margin = 0.01
-radius = 0.0324788
+[sub_resource type="BoxShape3D" id="BoxShape3D_d5syh"]
+size = Vector3(0.04, 0.017, 0.04)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dshio"]
 albedo_color = Color(0.85, 0.2465, 0.2465, 1)
@@ -37,7 +36,8 @@ displacement = Vector3(0, -0.013, 0)
 duration = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableAreaButton"]
-shape = SubResource("SphereShape3D_cnvmo")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00854981, 0)
+shape = SubResource("BoxShape3D_d5syh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="InteractableAreaButton"]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0.005, 0)
@@ -48,3 +48,4 @@ stream = ExtResource("6_m4tja")
 bus = &"Items"
 
 [connection signal="button_pressed" from="InteractableAreaButton" to="." method="_on_power_button_pressed"]
+[connection signal="button_released" from="InteractableAreaButton" to="." method="_on_power_button_released"]

@@ -88,6 +88,7 @@ enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
 [physics]
 
 common/physics_ticks_per_second=90
+common/enable_object_picking=false
 
 [rendering]
 

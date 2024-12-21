@@ -1,8 +1,12 @@
-[gd_resource type="Environment" load_steps=5 format=3 uid="uid://cb3yg5j0xnycg"]
+[gd_resource type="Environment" load_steps=6 format=3 uid="uid://cb3yg5j0xnycg"]
+
+[sub_resource type="Gradient" id="Gradient_bmil6"]
+offsets = PackedFloat32Array(0.356725, 0.807018)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_u38r5"]
-frequency = 0.0262
+frequency = 0.025
 fractal_type = 2
+fractal_octaves = 4
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7dp0j"]
 width = 256
@@ -10,14 +14,17 @@ height = 256
 invert = true
 generate_mipmaps = false
 seamless = true
+color_ramp = SubResource("Gradient_bmil6")
 noise = SubResource("FastNoiseLite_u38r5")
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_d7qv8"]
-sky_top_color = Color(0.160784, 0.654902, 0.788235, 1)
-sky_energy_multiplier = 1.15
+sky_top_color = Color(0.2576, 0.77648, 0.92, 1)
+sky_horizon_color = Color(0.8019, 0.942975, 0.99, 1)
 sky_cover = SubResource("NoiseTexture2D_7dp0j")
-sky_cover_modulate = Color(1, 1, 1, 0.619608)
-ground_bottom_color = Color(0.47641, 0.71, 0.4118, 1)
+sky_cover_modulate = Color(1, 1, 1, 0.623529)
+ground_bottom_color = Color(0.521737, 0.780652, 0.486076, 1)
+ground_horizon_color = Color(0.876333, 1, 0.86, 1)
+ground_curve = 0.00840895
 
 [sub_resource type="Sky" id="Sky_08kpq"]
 sky_material = SubResource("ProceduralSkyMaterial_d7qv8")
@@ -27,3 +34,4 @@ background_mode = 2
 sky = SubResource("Sky_08kpq")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.7
