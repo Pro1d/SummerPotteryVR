@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://xue503ba4yrf"]
+[gd_scene load_steps=10 format=3 uid="uid://xue503ba4yrf"]
 
 [ext_resource type="Script" path="res://scripts/radio.gd" id="1_hht54"]
 [ext_resource type="AudioStream" uid="uid://cqdks4n73xyb8" path="res://assets/musics/summer_time_-_migfus20_radio-fx.ogg" id="2_lg7xk"]
@@ -6,8 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://cme66uldrjl2i" path="res://addons/godot-xr-tools/interactables/interactable_area_button.tscn" id="5_xdl1j"]
 [ext_resource type="AudioStream" uid="uid://crgaexypgi7t4" path="res://assets/sounds/tuck.ogg" id="6_m4tja"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_d5syh"]
-size = Vector3(0.04, 0.017, 0.04)
+[sub_resource type="BoxShape3D" id="BoxShape3D_fltjg"]
+size = Vector3(0.0998535, 0.148743, 0.291016)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tq2p0"]
+radius = 0.02
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dshio"]
 albedo_color = Color(0.85, 0.2465, 0.2465, 1)
@@ -19,8 +22,12 @@ bottom_radius = 0.03
 height = 0.025
 radial_segments = 4
 
-[node name="Radio" type="Node3D"]
+[node name="Radio" type="StaticBody3D"]
 script = ExtResource("1_hht54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0751648, 0)
+shape = SubResource("BoxShape3D_fltjg")
 
 [node name="radio" parent="." instance=ExtResource("2_t3d6x")]
 
@@ -36,8 +43,8 @@ displacement = Vector3(0, -0.013, 0)
 duration = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableAreaButton"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00854981, 0)
-shape = SubResource("BoxShape3D_d5syh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000491798, 0)
+shape = SubResource("SphereShape3D_tq2p0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="InteractableAreaButton"]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0.005, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bwgf30ufty6ug"]
+[gd_scene load_steps=20 format=3 uid="uid://bwgf30ufty6ug"]
 
 [ext_resource type="Script" path="res://scenes/PotteryWorkbench.gd" id="1_1ungh"]
 [ext_resource type="ArrayMesh" uid="uid://womrvbfrmhdf" path="res://resources/workbench-empty.res" id="2_5jwwm"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cme66uldrjl2i" path="res://addons/godot-xr-tools/interactables/interactable_area_button.tscn" id="4_jfb74"]
 [ext_resource type="AudioStream" uid="uid://crgaexypgi7t4" path="res://assets/sounds/tuck.ogg" id="5_nk65y"]
 [ext_resource type="AudioStream" uid="uid://bnji78bjbijho" path="res://assets/sounds/workshop - spining_wood.ogg" id="6_i5q4o"]
+[ext_resource type="PackedScene" uid="uid://cr8yyirxhfqrt" path="res://scenes/PaintPot.tscn" id="7_110b1"]
+[ext_resource type="PackedScene" uid="uid://cc05y7i3omwnd" path="res://scenes/WaterPot.tscn" id="8_bj3tw"]
+[ext_resource type="PackedScene" uid="uid://b1k8f87owlngy" path="res://scenes/SpongePlate.tscn" id="9_ahpf8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s5vmt"]
 size = Vector3(1.03223, 0.844727, 0.646484)
@@ -13,6 +16,9 @@ size = Vector3(1.03223, 0.844727, 0.646484)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_wf56e"]
 height = 0.0376662
 radius = 0.286532
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xixqs"]
+size = Vector3(0.203125, 0.122131, 0.158203)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8uf2"]
 albedo_color = Color(0.747822, 0.722176, 0.72229, 1)
@@ -42,6 +48,10 @@ radial_segments = 9
 [sub_resource type="BoxShape3D" id="BoxShape3D_1iycd"]
 size = Vector3(0.201172, 0.138195, 0.15625)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_nrsid"]
+margin = 0.01
+size = Vector3(0.292725, 0.470703, 0.258789)
+
 [node name="PotteryWorkbench" type="Node3D"]
 script = ExtResource("1_1ungh")
 
@@ -61,17 +71,6 @@ transform = Transform3D(3.5, 3.01992e-07, -3.32191e-07, 5.28485e-07, -2, -1.6814
 mesh = ExtResource("2_5jwwm")
 skeleton = NodePath("../../..")
 
-[node name="Spinning" type="Node3D" parent="."]
-transform = Transform3D(-0.788233, 0, -0.615377, 0, 1, 0, 0.615377, 0, -0.788233, 0, 0.112735, 0)
-
-[node name="Spinning-plate" type="MeshInstance3D" parent="Spinning"]
-transform = Transform3D(-2.28385, 0, -1.01687, 0, 2.5, 0, 1.01687, 0, -2.28385, 0, 0.114838, 0)
-mesh = ExtResource("3_g2k80")
-skeleton = NodePath("../../..")
-
-[node name="Placeholder" type="Node3D" parent="Spinning"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.77468, 0)
-
 [node name="PlateBody" type="StaticBody3D" parent="."]
 unique_name_in_owner = true
 constant_angular_velocity = Vector3(0, 3.80446, 0)
@@ -80,16 +79,32 @@ constant_angular_velocity = Vector3(0, 3.80446, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.860398, 0)
 shape = SubResource("CylinderShape3D_wf56e")
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.819742, -0.572733, 0, 0.572733, 0.819742, 0.506263, 0.891196, -0.186993)
+[node name="Spinning" type="Node3D" parent="PlateBody"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.112735, 0)
 
-[node name="PowerBox" type="MeshInstance3D" parent="Node3D"]
+[node name="Spinning-plate" type="MeshInstance3D" parent="PlateBody/Spinning"]
+transform = Transform3D(-2.28385, 0, -1.01687, 0, 2.5, 0, 1.01687, 0, -2.28385, 0, 0.114838, 0)
+mesh = ExtResource("3_g2k80")
+skeleton = NodePath("../../../..")
+
+[node name="Placeholder" type="Node3D" parent="PlateBody/Spinning"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.77468, 0)
+
+[node name="PowerBox" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.915297, -0.402779, 0, 0.402779, 0.915297, 0.49694, 0.886313, -0.107665)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PowerBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0376278, 8.9407e-08)
+shape = SubResource("BoxShape3D_xixqs")
+
+[node name="PowerBox" type="MeshInstance3D" parent="PowerBox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0388083, 0)
 mesh = SubResource("BoxMesh_lu8nq")
 skeleton = NodePath("../..")
 
-[node name="Label3D" type="Label3D" parent="Node3D"]
-transform = Transform3D(2.75, 0, 0, 0, -3.57628e-07, 2.75, 0, -2.75, -3.57628e-07, 0, 0.0215044, 0.047015)
+[node name="Label3D" type="Label3D" parent="PowerBox"]
+transform = Transform3D(2.75, 0, 0, 0, -3.57628e-07, 2.75, 0, -2.75, -3.57628e-07, 0, 0.0215044, -0.0506284)
 pixel_size = 0.001
 double_sided = false
 alpha_cut = 1
@@ -99,33 +114,76 @@ text = "POWER"
 font_size = 10
 outline_size = 0
 
-[node name="InteractableAreaButton" parent="Node3D" instance=ExtResource("4_jfb74")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, -0.0237908)
-button = NodePath("MeshInstance3D")
+[node name="InteractableAreaButton" parent="PowerBox" instance=ExtResource("4_jfb74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0358488, 0.028542)
+button = NodePath("CollisionShape3D/MeshInstance3D")
+displacement = Vector3(0, -0.015, 0)
 duration = 0.2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/InteractableAreaButton"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PowerBox/InteractableAreaButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.025, 0)
 shape = SubResource("SphereShape3D_w2ld0")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/InteractableAreaButton"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0139211, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PowerBox/InteractableAreaButton/CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.013921, 0)
 mesh = SubResource("CylinderMesh_jeg72")
+skeleton = NodePath("../..")
 
-[node name="ButtonAudio" type="AudioStreamPlayer3D" parent="Node3D/InteractableAreaButton"]
+[node name="PowerButtonAudio" type="AudioStreamPlayer3D" parent="PowerBox/InteractableAreaButton"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.140602, 0.0646408)
 stream = ExtResource("5_nk65y")
 bus = &"Items"
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Node3D"]
+[node name="StaticBody3D" type="StaticBody3D" parent="PowerBox"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PowerBox/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0484678, 0)
 shape = SubResource("BoxShape3D_1iycd")
 
 [node name="WoodSpinningAudio" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.716794, 0)
 stream = ExtResource("6_i5q4o")
-volume_db = -46.0517
 bus = &"Items"
 
-[connection signal="button_pressed" from="Node3D/InteractableAreaButton" to="." method="_on_power_button_pressed"]
+[node name="SpongePlate" parent="." instance=ExtResource("9_ahpf8")]
+transform = Transform3D(0.995195, 0, -0.0979129, 0, 1, 0, 0.0979129, 0, 0.995195, 0.38559, 0.854946, 0.182739)
+
+[node name="WaterPot" parent="." instance=ExtResource("8_bj3tw")]
+transform = Transform3D(0.110081, 0, 0.993923, 0, 1, 0, -0.993923, 0, 0.110081, 0.580763, 0.854474, 0.245066)
+
+[node name="RightWorkbench" type="StaticBody3D" parent="."]
+transform = Transform3D(-1.00536e-07, 0, 2.3, 0, 2.3, 0, -2.3, 0, -1.00536e-07, 0.531098, 0.190945, 0.150146)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightWorkbench"]
+transform = Transform3D(1, 0, 1.02673e-12, 0, 1, 0, -1.02673e-12, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_nrsid")
+
+[node name="WorkbenchPaint" type="MeshInstance3D" parent="RightWorkbench"]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -7.10543e-15, 0, 0.891505, 0, 0, 0)
+mesh = ExtResource("2_5jwwm")
+skeleton = NodePath("../../..")
+
+[node name="Workbench-empty2" type="MeshInstance3D" parent="RightWorkbench/WorkbenchPaint"]
+transform = Transform3D(1, 3.82137e-15, 8.74228e-08, -3.82137e-15, -1, 8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 0, 0, 0)
+mesh = ExtResource("2_5jwwm")
+skeleton = NodePath("../../../..")
+
+[node name="PaintPot" parent="RightWorkbench" instance=ExtResource("7_110b1")]
+transform = Transform3D(-0.433894, 0, -0.0277775, 0, 0.434783, 0, 0.0277775, 0, -0.433894, -0.107588, 0.239355, -0.0347781)
+color = Color(0.0913, 0.485273, 0.83, 1)
+
+[node name="PaintPot2" parent="RightWorkbench" instance=ExtResource("7_110b1")]
+transform = Transform3D(-0.0317445, 0, -0.433623, 0, 0.434783, 0, 0.433623, 0, -0.0317445, -0.109032, 0.239355, -0.0938705)
+color = Color(0.84, 0.168, 0.168, 1)
+
+[node name="PaintPot3" parent="RightWorkbench" instance=ExtResource("7_110b1")]
+transform = Transform3D(-0.0208828, 0, -0.434281, 0, 0.434783, 0, 0.434281, 0, -0.0208828, -0.104749, 0.23963, 0.0806271)
+color = Color(0.5301, 0.0912, 0.57, 1)
+
+[node name="PaintPot4" parent="RightWorkbench" instance=ExtResource("7_110b1")]
+transform = Transform3D(-0.0279896, 0, 0.433881, 0, 0.434783, 0, -0.433881, 0, -0.0279896, -0.106084, 0.236678, 0.0233959)
+color = Color(0.0942359, 0.710191, 0.187222, 1)
+
+[connection signal="button_pressed" from="PowerBox/InteractableAreaButton" to="." method="_on_power_button_pressed"]

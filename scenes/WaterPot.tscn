@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://cc05y7i3omwnd"]
+
+[ext_resource type="Script" path="res://scripts/water_pot.gd" id="1_bqsst"]
+[ext_resource type="ArrayMesh" uid="uid://c2wx4a825qyqm" path="res://resources/pot.res" id="2_4orct"]
+[ext_resource type="Material" uid="uid://bdi6gyeui86r1" path="res://resources/materials/water.material" id="3_052qq"]
+[ext_resource type="PackedScene" uid="uid://ce7vysyvondf8" path="res://addons/godot-xr-tools/objects/snap_zone.tscn" id="3_k54jr"]
+[ext_resource type="AudioStream" uid="uid://dgnqx3yi15ycv" path="res://assets/sounds/brush-drop-in-glass.ogg" id="4_mtlx1"]
+[ext_resource type="Script" path="res://scripts/auto_snap_on_drop.gd" id="7_65w2n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6taaa"]
+size = Vector3(0.12, 0.12, 0.12)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ohxqy"]
+size = Vector2(0.11, 0.11)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_o6kcy"]
+resource_local_to_scene = true
+radius = 0.15
+
+[node name="WaterPot" type="StaticBody3D"]
+script = ExtResource("1_bqsst")
+color = Color(1, 1, 1, 0)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 0)
+shape = SubResource("BoxShape3D_6taaa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_4orct")
+
+[node name="Paint" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.097, 0)
+mesh = SubResource("PlaneMesh_ohxqy")
+surface_material_override/0 = ExtResource("3_052qq")
+
+[node name="PaintPotArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00717578, 0)
+collision_layer = 8388608
+collision_mask = 8388608
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PaintPotArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.018, 0)
+shape = SubResource("BoxShape3D_6taaa")
+
+[node name="SnapZone" parent="." instance=ExtResource("3_k54jr")]
+unique_name_in_owner = true
+transform = Transform3D(-0.773309, -0.527572, -0.351656, -0.105893, 0.654315, -0.748772, 0.625125, -0.541793, -0.561853, -0.0297348, 0.104669, -0.0311746)
+stash_sound = ExtResource("4_mtlx1")
+grab_distance = 0.15
+snap_require = "brush"
+
+[node name="CollisionShape3D" parent="SnapZone" index="0"]
+shape = SubResource("SphereShape3D_o6kcy")
+
+[node name="AudioStreamPlayer3D" parent="SnapZone" index="1"]
+volume_db = -12.0
+
+[node name="Brush" parent="SnapZone" instance_placeholder="res://scenes/Brush.tscn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="AutoSnapOnDrop" type="Node" parent="SnapZone"]
+script = ExtResource("7_65w2n")
+
+[editable path="SnapZone"]

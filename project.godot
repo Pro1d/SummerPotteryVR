@@ -99,6 +99,7 @@ textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/directional_shadow/size=2048
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 environment/defaults/default_clear_color=Color(0.301961, 0.301961, 0.301961, 0)
+environment/defaults/default_environment="res://resources/sky.tres"
 
 [xr]
 

@@ -22,7 +22,7 @@ sky_top_color = Color(0.2576, 0.77648, 0.92, 1)
 sky_horizon_color = Color(0.8019, 0.942975, 0.99, 1)
 sky_cover = SubResource("NoiseTexture2D_7dp0j")
 sky_cover_modulate = Color(1, 1, 1, 0.623529)
-ground_bottom_color = Color(0.521737, 0.780652, 0.486076, 1)
+ground_bottom_color = Color(0.380545, 0.686366, 0.482155, 1)
 ground_horizon_color = Color(0.876333, 1, 0.86, 1)
 ground_curve = 0.00840895
 

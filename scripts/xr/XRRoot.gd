@@ -10,6 +10,7 @@ var vr_supported := false
 @onready var _camera := %XRCamera3D as XRCamera3D
 @onready var left_controller := %XRControllerLeft as XRController3D
 @onready var right_controller := %XRControllerRight as XRController3D
+@onready var _default_origin := position
 
 func _ready() -> void:
 	if OS.has_feature("web"):
@@ -51,12 +52,12 @@ func _ready() -> void:
 	left_controller.button_pressed.connect(
 		func(_e: Variant) -> void:
 			if left_controller.is_button_pressed("primary_click") or left_controller.is_button_pressed("secondary_click"):
-				center_world_on_camera(Vector3(0.14, 0, 0.62))
+				center_world_on_camera(_default_origin)
 	)
 	right_controller.button_pressed.connect(
 		func(_e: Variant) -> void:
 			if right_controller.is_button_pressed("primary_click") or right_controller.is_button_pressed("secondary_click"):
-				center_world_on_camera(Vector3(0.14, 0, 0.62))
+				center_world_on_camera(_default_origin)
 	)
 
 func center_world_on_camera(origin: Vector3 = Vector3.ZERO) -> void:

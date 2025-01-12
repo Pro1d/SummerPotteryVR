@@ -14,6 +14,9 @@ func _ready() -> void:
 
 func update_color() -> void:
 	if paint_mesh == null: return
-	var mat := paint_mesh.mesh.surface_get_material(0).duplicate() as StandardMaterial3D
+	var mat := paint_mesh.get_surface_override_material(0) as StandardMaterial3D
 	mat.albedo_color = color
 	paint_mesh.set_surface_override_material(0, mat)
+
+static func find_parent_paint_pot(body: Area3D) -> PaintPot:
+	return (body.get_parent() as PaintPot) if body != null else null

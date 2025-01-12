@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var sponge := %Sponge as XRToolsPickable
+@onready var sponge := %Sponge as Sponge
 @onready var brush := %Brush as Brush
 @onready var workbench := %PotteryWorkbench as PotteryWorkBench
 @onready var pot := %Pot3D as Pot3D
@@ -47,9 +47,8 @@ func _process(delta: float) -> void:
 	
 	if workbench.is_rotating():
 		var sponge_controller := sponge.get_picked_up_by_controller()
-		if sponge.is_picked_up() and sponge_controller != null:
-			var strength := remap(sponge_controller.get_float("trigger"), 0, 1, 0.0, 1.0)
-			var feedback := pot.sculpt(sponge.global_transform, 0.045, strength, delta)
+		if sponge_controller != null:
+			var feedback := pot.sculpt(sponge.global_transform, 0.045, sponge.strength, delta)
 			
 			var displacement_fb := feedback.x
 			var scuplt_fb := feedback.y

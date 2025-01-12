@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://b1k8f87owlngy"]
+
+[ext_resource type="ArrayMesh" uid="uid://fhivmg18o4ta" path="res://resources/sponge-plate.res" id="1_pi82n"]
+[ext_resource type="Material" uid="uid://bdi6gyeui86r1" path="res://resources/materials/water.material" id="2_5mveo"]
+[ext_resource type="PackedScene" uid="uid://ce7vysyvondf8" path="res://addons/godot-xr-tools/objects/snap_zone.tscn" id="3_dcqnh"]
+[ext_resource type="AudioStream" uid="uid://dy5yahvay8ql0" path="res://assets/sounds/wet-sponge.ogg" id="4_fk6tk"]
+[ext_resource type="Script" path="res://scripts/auto_snap_on_drop.gd" id="7_sw7xi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iin0r"]
+size = Vector3(0.13, 0.02, 0.13)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gb4lv"]
+size = Vector2(0.11, 0.11)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_voitu"]
+resource_local_to_scene = true
+radius = 0.15
+
+[node name="SpongePlate" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00970254, 0)
+shape = SubResource("BoxShape3D_iin0r")
+
+[node name="PlateMesh" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_pi82n")
+
+[node name="WaterMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0201362, 0)
+mesh = SubResource("PlaneMesh_gb4lv")
+surface_material_override/0 = ExtResource("2_5mveo")
+
+[node name="SnapZone" parent="." instance=ExtResource("3_dcqnh")]
+transform = Transform3D(-0.248383, 0.95815, -0.142318, -0.968003, -0.250937, -8.19973e-08, -0.0357129, 0.137764, 0.989821, -0.00263989, 0.0370086, -0.00421581)
+stash_sound = ExtResource("4_fk6tk")
+grab_distance = 0.15
+snap_require = "sponge"
+
+[node name="CollisionShape3D" parent="SnapZone" index="0"]
+shape = SubResource("SphereShape3D_voitu")
+
+[node name="AudioStreamPlayer3D" parent="SnapZone" index="1"]
+volume_db = -16.0
+
+[node name="Sponge" parent="SnapZone" instance_placeholder="res://scenes/Sponge.tscn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="AutoSnapOnDrop" type="Node" parent="SnapZone"]
+script = ExtResource("7_sw7xi")
+
+[editable path="SnapZone"]
