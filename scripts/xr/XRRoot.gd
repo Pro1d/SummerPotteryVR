@@ -59,6 +59,7 @@ func _ready() -> void:
 			if right_controller.is_button_pressed("primary_click") or right_controller.is_button_pressed("secondary_click"):
 				center_world_on_camera(_default_origin)
 	)
+	center_world_on_camera.bind(_default_origin).call_deferred()
 
 func center_world_on_camera(origin: Vector3 = Vector3.ZERO) -> void:
 	var pos := _camera.position

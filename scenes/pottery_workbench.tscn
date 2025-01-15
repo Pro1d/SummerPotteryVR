@@ -148,10 +148,10 @@ stream = ExtResource("6_i5q4o")
 bus = &"Items"
 
 [node name="SpongePlate" parent="." instance=ExtResource("9_ahpf8")]
-transform = Transform3D(0.995195, 0, -0.0979129, 0, 1, 0, 0.0979129, 0, 0.995195, 0.38559, 0.854946, 0.182739)
+transform = Transform3D(0.999124, 0, -0.0418408, 0, 1, 0, 0.0418408, 0, 0.999124, 0.366813, 0.854946, 0.208138)
 
 [node name="WaterPot" parent="." instance=ExtResource("8_bj3tw")]
-transform = Transform3D(0.110081, 0, 0.993923, 0, 1, 0, -0.993923, 0, 0.110081, 0.580763, 0.854474, 0.245066)
+transform = Transform3D(0.112631, 0, 0.993637, 0, 1, 0, -0.993637, 0, 0.112631, 0.597315, 0.854474, 0.168022)
 
 [node name="RightWorkbench" type="StaticBody3D" parent="."]
 transform = Transform3D(-1.00536e-07, 0, 2.3, 0, 2.3, 0, -2.3, 0, -1.00536e-07, 0.531098, 0.190945, 0.150146)

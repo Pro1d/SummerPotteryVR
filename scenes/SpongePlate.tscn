@@ -43,7 +43,6 @@ shape = SubResource("SphereShape3D_voitu")
 volume_db = -16.0
 
 [node name="Sponge" parent="SnapZone" instance_placeholder="res://scenes/Sponge.tscn"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="AutoSnapOnDrop" type="Node" parent="SnapZone"]
 script = ExtResource("7_sw7xi")

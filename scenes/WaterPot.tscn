@@ -57,7 +57,6 @@ shape = SubResource("SphereShape3D_o6kcy")
 volume_db = -12.0
 
 [node name="Brush" parent="SnapZone" instance_placeholder="res://scenes/Brush.tscn"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="AutoSnapOnDrop" type="Node" parent="SnapZone"]
 script = ExtResource("7_65w2n")
