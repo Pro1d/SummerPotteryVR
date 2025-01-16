@@ -144,7 +144,7 @@ func sculpt(tool_transform: Transform3D, tool_radius: float, tool_strength: floa
 			
 			const K := paint_curve_resolution / curve_resolution
 			for j in range(i * K, (i + 1) * K):
-				paint_mask_curve.set_point_value(j, maxf(0.0, paint_mask_curve.get_point_position(j).y - delta))
+				paint_mask_curve.set_point_value(j, maxf(0.0, paint_mask_curve.get_point_position(j).y - delta * 1.0))
 	
 	return Vector2(displacement_feedback, clampf(sculpt_feedback, 0, 1))
 
@@ -167,10 +167,24 @@ func paint(tool_origin: Vector3, tool_radius: float, color: Color) -> float:
 		var target_point_r0 := maxf(tool_origin_r - tool_shape_r - half_thickness, 0.0)
 		var target_point_r1 := maxf(tool_origin_r + tool_radius + half_thickness, 0.0)
 		if target_point_r0 < point_r and point_r < target_point_r1:
-			paint_curves[0].set_point_value(i, color.r)
-			paint_curves[1].set_point_value(i, color.g)
-			paint_curves[2].set_point_value(i, color.b)
-			paint_mask_curve.set_point_value(i, color.a)
+			blend_color(i, color)
 			painting = true
 	
 	return 1.0 if painting else 0.0
+
+func blend_color(index: int, color: Color) -> void:
+	var source_alpha := paint_mask_curve.get_point_position(index).y
+	var source_color := Color(
+		paint_curves[0].get_point_position(index).y,
+		paint_curves[1].get_point_position(index).y,
+		paint_curves[2].get_point_position(index).y
+	)
+	
+	var alpha_blend := color.a + source_alpha * (1 - color.a)
+	var color_blend := (color * color.a + source_color * source_alpha * (1 - color.a)) / alpha_blend
+	
+	paint_curves[0].set_point_value(index, color_blend.r)
+	paint_curves[1].set_point_value(index, color_blend.g)
+	paint_curves[2].set_point_value(index, color_blend.b)
+	paint_mask_curve.set_point_value(index, alpha_blend)
+	

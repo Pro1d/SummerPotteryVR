@@ -52,8 +52,8 @@ func _process(delta: float) -> void:
 			
 			var displacement_fb := feedback.x
 			var scuplt_fb := feedback.y
-			var intensity_low :=  0.0 if is_zero_approx(scuplt_fb) else lerpf(0.01, 0.11, scuplt_fb)
-			var intensity_high := lerpf(0.0, 0.5, displacement_fb)
+			var intensity_low :=  0.0 if is_zero_approx(scuplt_fb) else lerpf(0.05, 0.25, scuplt_fb)
+			var intensity_high := lerpf(0.0, 0.7, displacement_fb)
 			intensity_high = maxf(intensity_high, intensity_low)
 			var controller_index := _controllers.find(sponge_controller)
 			if controller_index != -1:
@@ -62,9 +62,12 @@ func _process(delta: float) -> void:
 			
 		var brush_controller := brush.get_picked_up_by_controller()
 		if brush.is_picked_up() and brush_controller != null:
-			var feedback := pot.paint(brush.get_tool_pos(), 0.02, brush.current_color)
+			var color := brush.current_color
+			var paint_speed := 0.987  # alpha from 0% to X% in 1 sec
+			color.a = clampf(1 - pow(1 - paint_speed, delta), 0, 1)
+			var feedback := pot.paint(brush.get_tool_pos(), 0.02, color)
 			var controller_index := _controllers.find(brush_controller)
 			if controller_index != -1:
-				_haptic_intensity_low[controller_index] = feedback * 0.02
-				_haptic_intensity_high[controller_index] = feedback * 0.02
+				_haptic_intensity_low[controller_index] = feedback * 0.07
+				_haptic_intensity_high[controller_index] = feedback * 0.07
 			

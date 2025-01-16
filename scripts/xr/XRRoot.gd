@@ -10,7 +10,7 @@ var vr_supported := false
 @onready var _camera := %XRCamera3D as XRCamera3D
 @onready var left_controller := %XRControllerLeft as XRController3D
 @onready var right_controller := %XRControllerRight as XRController3D
-@onready var _default_origin := position
+@onready var _default_tranform := global_transform
 
 func _ready() -> void:
 	if OS.has_feature("web"):
@@ -52,19 +52,40 @@ func _ready() -> void:
 	left_controller.button_pressed.connect(
 		func(_e: Variant) -> void:
 			if left_controller.is_button_pressed("primary_click") or left_controller.is_button_pressed("secondary_click"):
-				center_world_on_camera(_default_origin)
+				center_player_on(_default_tranform)
 	)
 	right_controller.button_pressed.connect(
 		func(_e: Variant) -> void:
 			if right_controller.is_button_pressed("primary_click") or right_controller.is_button_pressed("secondary_click"):
-				center_world_on_camera(_default_origin)
+				center_player_on(_default_tranform)
 	)
-	center_world_on_camera.bind(_default_origin).call_deferred()
+	center_player_on.bind(_default_tranform).call_deferred()
 
 func center_world_on_camera(origin: Vector3 = Vector3.ZERO) -> void:
 	var pos := _camera.position
 	pos.y = 0
-	position = origin - pos
+	position = origin - pos## This method center the player on the [param p_transform] transform.
+
+func center_player_on(p_transform : Transform3D) -> void:
+	# In order to center our player so the players feet are at the location
+	# indicated by p_transform, and having our player looking in the required
+	# direction, we must offset this transform using the cameras transform.
+
+	# So we get our current camera transform in local space
+	var camera_transform := _camera.transform
+
+	# We obtain our view direction and zero out our height
+	var view_direction := camera_transform.basis.z
+	view_direction.y = 0
+
+	# Now create the transform that we will use to offset our input with
+	var t : Transform3D
+	t = t.looking_at(-view_direction, Vector3.UP)
+	t.origin = camera_transform.origin
+	t.origin.y = 0
+
+	# And now update our origin point
+	global_transform = (p_transform * t.inverse()).orthonormalized()
 
 func set_passthrough(on: bool) -> bool:
 	var success := true
